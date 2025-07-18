@@ -1,5 +1,5 @@
 import { expect, Locator, Page } from "@playwright/test";
-import { ADDRGETNETWORKPARAMS } from "dns";
+
 
 export class LoginPage {
 
@@ -9,6 +9,7 @@ export class LoginPage {
     readonly loginButton: Locator
     readonly lockedAccountErrorMessage: Locator
     readonly closeButtonErrorMessage: Locator
+    readonly loginURL: string
 
     constructor(page: Page) {
         this.page = page
@@ -17,11 +18,13 @@ export class LoginPage {
         this.loginButton = page.locator('#login-button')
         this.lockedAccountErrorMessage = page.locator('form h3')
         this.closeButtonErrorMessage = page.locator('form button')
+        this.loginURL = 'https://www.saucedemo.com/'
 
     }
 
     async LoginPage() {
-        await this.page.goto('https://www.saucedemo.com/')
+        await this.page.goto(this.loginURL)
+
     }
 
     async loginUsingStandardUser() {

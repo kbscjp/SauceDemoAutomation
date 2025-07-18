@@ -13,6 +13,12 @@ test('Inventory page', async ({ page }) => {
 
 })
 
+test('Log Out', async ({ page }) => {
+    const navigateTo = new InventoryPage(page)
+    await navigateTo.gotoInventoryPage()
+    await navigateTo.LogOut()
+})
+
 test('Add To Cart Sauce Lab Backpack', async ({ page }) => {
     const navigateTo = new InventoryPage(page)
 
