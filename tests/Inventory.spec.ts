@@ -32,3 +32,10 @@ test('Add to Cart All', async ({ page }) => {
     await navigateTo.gotoInventoryPage()
     await navigateTo.addToCartAll()
 })
+
+test('Checking of name of items is clicable', async ({ page }) => {
+    const navigateTo = new InventoryPage(page)
+
+    await navigateTo.gotoInventoryPage()
+    await navigateTo.inventoryItems()
+})
