@@ -2,12 +2,18 @@
   "name": "saucedemoplaywright",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "loginPage-Chrome": "npx playwright test loginPage.spec.ts --project=chromium",
+    "loginPage-Firefox": "npx playwright test loginPage.spec.ts --project=firefox",
+    "loginPage-All": "npx playwright test loginPage.spec.ts --project=chromium && npx playwright test loginPage.spec.ts --project=firefox",
+    "inventoryPage-Chrome": "npx playwright test inventoryPage.spec.ts --project=chromium"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@faker-js/faker": "^9.9.0",
     "@playwright/test": "^1.54.1",
     "@types/node": "^24.0.14",
     "ts-node": "^10.9.2",

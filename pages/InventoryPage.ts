@@ -21,7 +21,8 @@ export class InventoryPage {
 
     constructor(page: Page) {
         this.page = page
-        this.addToCartButton = page.locator('.pricebar button')
+        this.addToCartButton = page.locator('.pricebar .btn_small')
+        // this.addToCartButton = page.locator('#add-to-cart-sauce-labs-backpack')
         this.shoppingCartButton = page.locator('.shopping_cart_link')
         this.menuButton = page.locator('.bm-burger-button')
         this.logOutMenu = page.locator('.bm-item-list #logout_sidebar_link')
@@ -54,7 +55,7 @@ export class InventoryPage {
     async gotoInventoryPage() {
         await this.page.goto(this.inventoryURL)
         await expect(this.labelProducts).toHaveText('Products')
-        await this.page.close()
+        // await this.page.close()  --ang bobo nung nag lagay
     }
 
     async addToCartSauceLabsBackpack() {

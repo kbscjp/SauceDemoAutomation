@@ -8,8 +8,8 @@ test('Inventory page', async ({ page }) => {
 
     // await page.goto(inventoryPage)
 
-    const inventoryPage = new InventoryPage(page)
-    await inventoryPage.gotoInventoryPage()
+    const navigateTo = new InventoryPage(page)
+    await navigateTo.gotoInventoryPage()
 
 })
 

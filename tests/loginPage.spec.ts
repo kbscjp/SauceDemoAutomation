@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
+import { faker } from '@faker-js/faker'
 
 
 
@@ -13,7 +14,6 @@ test('Login using valid username and password', async ({ page }) => {
 
 test('Login using invalid username', async ({ page }) => {
   const navigateTo = new LoginPage(page)
-
   await navigateTo.LoginPage()
   await navigateTo.loginUsingInvalidUsername()
 

@@ -1,4 +1,5 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { faker } from '@faker-js/faker'
 
 
 export class LoginPage {
@@ -10,6 +11,8 @@ export class LoginPage {
     readonly lockedAccountErrorMessage: Locator
     readonly closeButtonErrorMessage: Locator
     readonly loginURL: string
+    readonly randomUsername: string
+    readonly randomPassword: string
 
     constructor(page: Page) {
         this.page = page
@@ -19,6 +22,8 @@ export class LoginPage {
         this.lockedAccountErrorMessage = page.locator('form h3')
         this.closeButtonErrorMessage = page.locator('form button')
         this.loginURL = 'https://www.saucedemo.com/'
+        this.randomUsername = `${faker.person.fullName().replace(' ', '_').toLowerCase()}`
+        this.randomPassword = faker.food.ingredient()
 
     }
 
@@ -42,7 +47,7 @@ export class LoginPage {
 
     async loginUsingInvalidUsername() {
         await this.inputUsername.click()
-        await this.inputUsername.pressSequentially('asdaskjdha', { delay: 100 })
+        await this.inputUsername.pressSequentially(this.randomUsername, { delay: 100 })
 
         await this.inputPassword.click()
         await this.inputPassword.pressSequentially('secret_sauce', { delay: 100 })
@@ -61,7 +66,7 @@ export class LoginPage {
         await this.inputUsername.pressSequentially('standard_user', { delay: 100 })
 
         await this.inputPassword.click()
-        await this.inputPassword.pressSequentially('sasdhjlaskj', { delay: 100 })
+        await this.inputPassword.pressSequentially(this.randomPassword, { delay: 100 })
 
         await this.loginButton.click()
 
@@ -74,10 +79,10 @@ export class LoginPage {
 
     async loginUsingInvalidCredentials() {
         await this.inputUsername.click()
-        await this.inputUsername.pressSequentially('asdasoiuyo', { delay: 100 })
+        await this.inputUsername.pressSequentially(this.randomUsername, { delay: 100 })
 
         await this.inputPassword.click()
-        await this.inputPassword.pressSequentially('sasdhjlaskj', { delay: 100 })
+        await this.inputPassword.pressSequentially(this.randomPassword, { delay: 100 })
 
         await this.loginButton.click()
 
