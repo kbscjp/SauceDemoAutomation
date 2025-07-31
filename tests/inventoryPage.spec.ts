@@ -39,3 +39,11 @@ test('Checking of name of items is clicable', async ({ page }) => {
     await navigateTo.gotoInventoryPage()
     await navigateTo.inventoryItems()
 })
+
+
+test('Testing Sorting', async ({ page }) => {
+    const navigateTo = new InventoryPage(page)
+
+    await navigateTo.SortCategory()
+
+})

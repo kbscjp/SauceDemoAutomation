@@ -18,6 +18,10 @@ export class InventoryPage {
     readonly sauceLabFleeceJacket: Locator
     readonly sauceLabAllTheThings: Locator
     readonly invertoryItemBackButton: Locator
+    readonly productSortContainer: Locator
+    readonly socialTwitter: Locator
+    readonly socialFacebook: Locator
+    readonly socialLinkedIn: Locator
 
     constructor(page: Page) {
         this.page = page
@@ -37,7 +41,10 @@ export class InventoryPage {
         this.sauceLabFleeceJacket = page.locator('.inventory_item_name ', { hasText: "Sauce Labs Fleece Jacket" })
         this.sauceLabAllTheThings = page.locator('.inventory_item_name ', { hasText: "Test.allTheThings() T-Shirt (Red)" })
         this.invertoryItemBackButton = page.locator('.inventory_details_back_button')
-
+        this.productSortContainer = page.locator('.product_sort_container')
+        this.socialTwitter = page.locator('.social_twitter')
+        this.socialFacebook = page.locator('.social_facebook')
+        this.socialLinkedIn = page.locator('.social_linkedin')
 
     }
 
@@ -55,10 +62,11 @@ export class InventoryPage {
     async gotoInventoryPage() {
         await this.page.goto(this.inventoryURL)
         await expect(this.labelProducts).toHaveText('Products')
-        // await this.page.close()  --ang bobo nung nag lagay
+        // await this.page.close()
     }
 
     async addToCartSauceLabsBackpack() {
+        await this.page.goto(this.inventoryURL)
         await this.addToCartButton.first().click()
         await this.page.waitForTimeout(500)
         await this.shoppingCartButton.click()
@@ -145,7 +153,23 @@ export class InventoryPage {
         await this.page.close()
     }
 
-
+    async SortCategory() {
+        await this.page.goto(this.inventoryURL)
+        await this.productSortContainer.click()
+        await this.page.waitForTimeout(500)
+        await this.productSortContainer.selectOption('Name (Z to A)')
+        await this.productSortContainer.click()
+        await this.page.waitForTimeout(500)
+        await this.productSortContainer.selectOption('Price (low to high)')
+        await this.productSortContainer.click()
+        await this.page.waitForTimeout(500)
+        await this.productSortContainer.selectOption('Price (high to low)')
+        await this.productSortContainer.click()
+        await this.page.waitForTimeout(500)
+        await this.productSortContainer.selectOption('Name (A to Z)')
+        await this.productSortContainer.click()
+        await this.page.close()
+    }
 
 
 }
