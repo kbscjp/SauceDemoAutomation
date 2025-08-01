@@ -37,9 +37,6 @@ test.describe('Positive Scenarios', () => {
 })
 
 
-
-
-
 test.describe('Negative Scenarios', () => {
 
   test('Login while username is blank', async ({ page }) => {

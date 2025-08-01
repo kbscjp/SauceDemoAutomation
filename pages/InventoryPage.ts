@@ -4,6 +4,7 @@ export class InventoryPage {
 
     readonly page: Page
     readonly addToCartButton: Locator
+    readonly invetoryItemNames: Locator
     readonly shoppingCartButton: Locator
     readonly menuButton: Locator
     readonly logOutMenu: Locator
@@ -22,11 +23,12 @@ export class InventoryPage {
     readonly socialTwitter: Locator
     readonly socialFacebook: Locator
     readonly socialLinkedIn: Locator
+    readonly shoppingCartBadge: Locator
 
     constructor(page: Page) {
         this.page = page
         this.addToCartButton = page.locator('.pricebar .btn_small')
-        // this.addToCartButton = page.locator('#add-to-cart-sauce-labs-backpack')
+        this.invetoryItemNames = page.locator('inventory_item_name ')
         this.shoppingCartButton = page.locator('.shopping_cart_link')
         this.menuButton = page.locator('.bm-burger-button')
         this.logOutMenu = page.locator('.bm-item-list #logout_sidebar_link')
@@ -45,7 +47,7 @@ export class InventoryPage {
         this.socialTwitter = page.locator('.social_twitter')
         this.socialFacebook = page.locator('.social_facebook')
         this.socialLinkedIn = page.locator('.social_linkedin')
-
+        this.shoppingCartBadge = page.locator('shopping_cart_badge')
     }
 
     async LogOut() {
@@ -57,6 +59,7 @@ export class InventoryPage {
         await this.page.waitForTimeout(200)
         await this.page.close()
     }
+
 
 
     async gotoInventoryPage() {
@@ -79,6 +82,8 @@ export class InventoryPage {
         for (let i = 0; i < 6; i++) {
             await this.addToCartButton.nth(i).click()
             await this.page.waitForTimeout(500)
+            console.log(`Click Item number ${i + 1}`)
+            expect(this.shoppingCartBadge).toBeVisible
         }
 
         await this.shoppingCartButton.click()
@@ -89,86 +94,47 @@ export class InventoryPage {
     }
 
     async inventoryItems() {
-        /**Clicking Backpack info */
-        await this.sauceLabItemBackPack.hover()
-        expect(this.inventoryItemURL).toContain('/inventory-item.html')
-        await this.page.waitForTimeout(700)
-        await this.sauceLabItemBackPack.click()
-        await this.page.waitForTimeout(700)
-        await this.invertoryItemBackButton.hover()
-        await this.page.waitForTimeout(700)
-        await this.invertoryItemBackButton.click()
+        const inventoryItems = [
+            this.sauceLabItemBackPack,
+            this.sauceLabItemTShirt,
+            this.sauceLabItemOnesie,
+            this.sauceLabItemBikeLight,
+            this.sauceLabFleeceJacket,
+            this.sauceLabAllTheThings
+        ]
 
-        /**Clicking Tshirt info */
-        await this.sauceLabItemTShirt.hover()
-        expect(this.inventoryItemURL).toContain('/inventory-item.html')
-        await this.page.waitForTimeout(700)
-        await this.sauceLabItemTShirt.click()
-        await this.page.waitForTimeout(700)
-        await this.invertoryItemBackButton.hover()
-        await this.page.waitForTimeout(700)
-        await this.invertoryItemBackButton.click()
-
-        /**Clicking Onesie info */
-        await this.sauceLabItemOnesie.hover()
-        expect(this.inventoryItemURL).toContain('/inventory-item.html')
-        await this.page.waitForTimeout(700)
-        await this.sauceLabItemOnesie.click()
-        await this.page.waitForTimeout(700)
-        await this.invertoryItemBackButton.hover()
-        await this.page.waitForTimeout(700)
-        await this.invertoryItemBackButton.click()
-
-        /**Clicking Bike Light info */
-        await this.sauceLabItemBikeLight.hover()
-        expect(this.inventoryItemURL).toContain('/inventory-item.html')
-        await this.page.waitForTimeout(700)
-        await this.sauceLabItemBikeLight.click()
-        await this.page.waitForTimeout(700)
-        await this.invertoryItemBackButton.hover()
-        await this.page.waitForTimeout(700)
-        await this.invertoryItemBackButton.click()
-
-        /**Clicking Fleece Jacket info */
-        await this.sauceLabFleeceJacket.hover()
-        expect(this.inventoryItemURL).toContain('/inventory-item.html')
-        await this.page.waitForTimeout(700)
-        await this.sauceLabFleeceJacket.click()
-        await this.page.waitForTimeout(700)
-        await this.invertoryItemBackButton.hover()
-        await this.page.waitForTimeout(700)
-        await this.invertoryItemBackButton.click()
-
-        /**Clicking Bike Light info */
-        await this.sauceLabAllTheThings.hover()
-        expect(this.inventoryItemURL).toContain('/inventory-item.html')
-        await this.page.waitForTimeout(700)
-        await this.sauceLabAllTheThings.click()
-        await this.page.waitForTimeout(700)
-        await this.invertoryItemBackButton.hover()
-        await this.page.waitForTimeout(700)
-        await this.invertoryItemBackButton.click()
-
-        await this.page.waitForTimeout(700)
-        await this.page.close()
+        for (const item of inventoryItems) {
+            await this.clickItemAndBack(item)
+        }
     }
 
-    async SortCategory() {
+    async sortCategories() {
         await this.page.goto(this.inventoryURL)
-        await this.productSortContainer.click()
-        await this.page.waitForTimeout(500)
-        await this.productSortContainer.selectOption('Name (Z to A)')
-        await this.productSortContainer.click()
-        await this.page.waitForTimeout(500)
-        await this.productSortContainer.selectOption('Price (low to high)')
-        await this.productSortContainer.click()
-        await this.page.waitForTimeout(500)
-        await this.productSortContainer.selectOption('Price (high to low)')
-        await this.productSortContainer.click()
-        await this.page.waitForTimeout(500)
-        await this.productSortContainer.selectOption('Name (A to Z)')
-        await this.productSortContainer.click()
-        await this.page.close()
+
+        const sortOptions = [
+            'Name (Z to A)',
+            'Price (low to high)',
+            'Price (high to low)',
+            'Name (A to Z)'
+        ]
+
+        for (const option of sortOptions) {
+            await this.productSortContainer.click()
+            await this.productSortContainer.selectOption(option)
+        }
+    }
+
+    private async countBadge() {
+
+    }
+
+
+    private async clickItemAndBack(item: Locator) {
+        await item.hover()
+        await item.click()
+        await this.invertoryItemBackButton.isVisible()
+        await this.invertoryItemBackButton.click()
+        expect(this.inventoryURL).toContain('inventory.html')
     }
 
 

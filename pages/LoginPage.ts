@@ -26,21 +26,10 @@ export class LoginPage {
         await this.page.goto(this.loginURL)
     }
 
-    async typeCredentials(username: string, password: string) {
-        await this.inputUsername.click()
-        await this.inputUsername.pressSequentially(username, { delay: 100 })
-
-        await this.inputPassword.click()
-        await this.inputPassword.pressSequentially(password, { delay: 100 })
-    }
-
-    async saveSession() {
-        await this.page.context().storageState({ path: 'auth.json' }) //ise-save nya yung 
-    }
-
     async loginAndSaveSession(username: string, password: string) {
         await this.typeCredentials(username, password)
         await this.loginButton.click()
+
         await this.saveSession()
     }
 
@@ -62,7 +51,6 @@ export class LoginPage {
 
         await this.closeButtonErrorMessage.click()
     }
-
 
     async loginEmptyUsernameField(password: string, expectedErrorMessage: string) {
         await this.inputPassword.click()
@@ -96,10 +84,21 @@ export class LoginPage {
         await expect(this.loginErrorMessage).toHaveText(expectedErrorMessage)
 
         await this.closeButtonErrorMessage.click()
-
-
     }
 
 
 
+
+
+    private async typeCredentials(username: string, password: string) {
+        await this.inputUsername.click()
+        await this.inputUsername.pressSequentially(username, { delay: 100 })
+
+        await this.inputPassword.click()
+        await this.inputPassword.pressSequentially(password, { delay: 100 })
+    }
+
+    private async saveSession() {
+        await this.page.context().storageState({ path: 'auth.json' }) //ise-save nya yung 
+    }
 }
