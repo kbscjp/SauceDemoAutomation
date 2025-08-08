@@ -6,7 +6,8 @@
     "loginPage-Chrome": "npx playwright test loginPage.spec.ts --project=chromium",
     "loginPage-Firefox": "npx playwright test loginPage.spec.ts --project=firefox",
     "loginPage-All": "npx playwright test loginPage.spec.ts --project=chromium && npx playwright test loginPage.spec.ts --project=firefox",
-    "inventoryPage-Chrome": "npx playwright test inventoryPage.spec.ts --project=chromium"
+    "inventoryPage-Chrome": "npx playwright test inventoryPage.spec.ts --project=chromium",
+    "regression": "npx playwright test"
   },
   "keywords": [],
   "author": "",

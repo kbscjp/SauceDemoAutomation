@@ -24,6 +24,9 @@ export class InventoryPage {
     readonly socialFacebook: Locator
     readonly socialLinkedIn: Locator
     readonly shoppingCartBadge: Locator
+    readonly aboutPage: Locator
+    readonly aboutPageURL: string
+    readonly resetAppState: Locator
 
     constructor(page: Page) {
         this.page = page
@@ -48,7 +51,11 @@ export class InventoryPage {
         this.socialFacebook = page.locator('.social_facebook')
         this.socialLinkedIn = page.locator('.social_linkedin')
         this.shoppingCartBadge = page.locator('shopping_cart_badge')
+        this.aboutPage = page.locator('#about_sidebar_link')
+        this.aboutPageURL = 'https://saucelabs.com/'
+        this.resetAppState = page.locator('#reset_sidebar_link')
     }
+
 
     async LogOut() {
         await this.menuButton.hover()
@@ -58,6 +65,22 @@ export class InventoryPage {
         await this.logOutMenu.click()
         await this.page.waitForTimeout(200)
         await this.page.close()
+    }
+
+    async AboutPage() {
+        await this.menuButton.click()
+        await this.aboutPage.hover()
+        await this.page.waitForTimeout(200)
+        await this.aboutPage.click()
+
+        expect(this.aboutPageURL).toEqual('https://saucelabs.com/')
+    }
+
+    async ResetAppState() {
+        await this.menuButton.click()
+        await this.resetAppState.hover()
+        await this.page.waitForTimeout(200)
+        await this.resetAppState.click()
     }
 
 
@@ -124,9 +147,7 @@ export class InventoryPage {
         }
     }
 
-    private async countBadge() {
 
-    }
 
 
     private async clickItemAndBack(item: Locator) {

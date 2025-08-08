@@ -10,6 +10,7 @@ export class CartPage {
     readonly quantityLabel: Locator
     readonly descriptionLable: Locator
 
+
     constructor(page: Page) {
         this.page = page
         this.cartPageURL = 'https://www.saucedemo.com/cart.html'
@@ -18,6 +19,7 @@ export class CartPage {
         this.continueShopping = page.locator('#continue-shopping')
         this.quantityLabel = page.locator('.cart_quantity_label')
         this.descriptionLable = page.locator('.cart_desc_label')
+
     }
 
     async CartPage() {
@@ -44,6 +46,8 @@ export class CartPage {
         await this.continueShopping.click()
         await this.page.close()
     }
+
+
 
 
 

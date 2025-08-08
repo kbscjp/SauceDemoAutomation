@@ -13,6 +13,14 @@ test('Log Out', async ({ page }) => {
     await inventoryPage.LogOut()
 })
 
+test('About Page', async ({ page }) => {
+    await inventoryPage.AboutPage()
+})
+
+test('Reset App State', async ({ page }) => {
+    await inventoryPage.ResetAppState()
+})
+
 test('Add To Cart Sauce Lab Backpack', async ({ page }) => {
     await inventoryPage.addToCartSauceLabsBackpack()
 })
@@ -28,8 +36,4 @@ test('Checking of name of items is clicable', async ({ page }) => {
 
 test('Testing the Sorting Options', async ({ page }) => {
     await inventoryPage.sortCategories()
-})
-
-test('Shopping Cart Badge', async ({ page }) => {
-
 })
