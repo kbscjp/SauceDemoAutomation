@@ -37,3 +37,7 @@ test('Checking of name of items is clicable', async ({ page }) => {
 test('Testing the Sorting Options', async ({ page }) => {
     await inventoryPage.sortCategories()
 })
+
+test('Facebook Button on Footer', async ({ page }) => {
+    await inventoryPage.faceBookPage()
+})

@@ -27,6 +27,7 @@ export class InventoryPage {
     readonly aboutPage: Locator
     readonly aboutPageURL: string
     readonly resetAppState: Locator
+    readonly facebookPageLink: string
 
     constructor(page: Page) {
         this.page = page
@@ -54,6 +55,7 @@ export class InventoryPage {
         this.aboutPage = page.locator('#about_sidebar_link')
         this.aboutPageURL = 'https://saucelabs.com/'
         this.resetAppState = page.locator('#reset_sidebar_link')
+        this.facebookPageLink = 'https://www.facebook.com/saucelabs'
     }
 
 
@@ -147,7 +149,13 @@ export class InventoryPage {
         }
     }
 
+    async faceBookPage() {
+        await this.page.goto(this.inventoryURL)
 
+        await this.socialFacebook.click()
+        expect(this.facebookPageLink).toEqual('https://www.facebook.com/saucelabs')
+
+    }
 
 
     private async clickItemAndBack(item: Locator) {
