@@ -184,7 +184,17 @@ export class InventoryPage {
         await this.page.goto(this.inventoryURL)
 
         await this.footerCopy.scrollIntoViewIfNeeded()
-        expect(this.footerCopy).toContainText(' Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy')
+        expect(this.footerCopy).toContainText('© 2025 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy')
+
+        // const footerCopies = [
+        //     '© ',
+        //     '2025',
+        //     ' Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy'
+        // ]
+
+        // for (const copy of footerCopies) {
+        //     expect(this.footerCopy).toContainText(footerCopies)
+        // }
     }
 
 
