@@ -38,6 +38,25 @@ test('Testing the Sorting Options', async ({ page }) => {
     await inventoryPage.sortCategories()
 })
 
-test('Facebook Button on Footer', async ({ page }) => {
-    await inventoryPage.faceBookPage()
+
+test.describe('Footer Contents', () => {
+
+    test('Facebook Button on Footer', async ({ page }) => {
+        await inventoryPage.faceBookPage()
+    })
+
+    test('X SauceLab Page', async ({ page }) => {
+        await inventoryPage.xSauceLabs()
+    })
+
+    test('Linked In SauceLab Page', async ({ page }) => {
+        await inventoryPage.linkedInSauceLabs()
+    })
+
+    test('Copy Right', async ({ page }) => {
+        await inventoryPage.footerCopyRight()
+    })
 })
+
+
+

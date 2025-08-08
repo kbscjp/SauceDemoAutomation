@@ -28,6 +28,9 @@ export class InventoryPage {
     readonly aboutPageURL: string
     readonly resetAppState: Locator
     readonly facebookPageLink: string
+    readonly twitterLink: string
+    readonly linkedInLink: string
+    readonly footerCopy: Locator
 
     constructor(page: Page) {
         this.page = page
@@ -56,6 +59,9 @@ export class InventoryPage {
         this.aboutPageURL = 'https://saucelabs.com/'
         this.resetAppState = page.locator('#reset_sidebar_link')
         this.facebookPageLink = 'https://www.facebook.com/saucelabs'
+        this.twitterLink = 'https://x.com/saucelabs'
+        this.linkedInLink = 'https://www.linkedin.com/company/sauce-labs/'
+        this.footerCopy = page.locator('.footer_copy')
     }
 
 
@@ -152,9 +158,33 @@ export class InventoryPage {
     async faceBookPage() {
         await this.page.goto(this.inventoryURL)
 
+        await this.socialFacebook.scrollIntoViewIfNeeded()
         await this.socialFacebook.click()
         expect(this.facebookPageLink).toEqual('https://www.facebook.com/saucelabs')
 
+    }
+
+    async xSauceLabs() {
+        await this.page.goto(this.inventoryURL)
+
+        await this.socialTwitter.scrollIntoViewIfNeeded()
+        await this.socialTwitter.click()
+        expect(this.twitterLink).toEqual('https://x.com/saucelabs')
+    }
+
+    async linkedInSauceLabs() {
+        await this.page.goto(this.inventoryURL)
+
+        await this.socialLinkedIn.scrollIntoViewIfNeeded()
+        await this.socialLinkedIn.click()
+        expect(this.linkedInLink).toEqual('https://www.linkedin.com/company/sauce-labs/')
+    }
+
+    async footerCopyRight() {
+        await this.page.goto(this.inventoryURL)
+
+        await this.footerCopy.scrollIntoViewIfNeeded()
+        expect(this.footerCopy).toContainText(' Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy')
     }
 
 
