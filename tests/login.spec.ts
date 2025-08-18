@@ -1,12 +1,14 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { faker } from '@faker-js/faker'
+import username from '../test-data/usernames.json'
 
 let loginPage: LoginPage;
 const ERR_USERNAME_REQUIRED = 'Epic sadface: Username is required';
 const ERR_PASSWORD_REQUIRED = 'Epic sadface: Password is required';
 const ERR_INVALID_CREDS = 'Epic sadface: Username and password do not match any user in this service';
 const ERR_LOCKED_ACCT = 'Epic sadface: Sorry, this user has been locked out.'
+
 
 test.beforeEach(async ({ page }) => {
   loginPage = new LoginPage(page)

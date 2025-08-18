@@ -1,4 +1,5 @@
 import { expect, Locator, Page } from "@playwright/test";
+import inventoryData from '../test-data/inventoryDescriptions.json'
 
 export class InventoryPage {
 
@@ -6,8 +7,9 @@ export class InventoryPage {
     readonly addToCartButton: Locator
     readonly invetoryItemNames: Locator
     readonly shoppingCartButton: Locator
-    readonly menuButton: Locator
+    readonly navigationButton: Locator
     readonly logOutMenu: Locator
+    readonly allItems: Locator
     readonly inventoryURL: string
     readonly labelProducts: Locator
     readonly inventoryItemURL: string
@@ -31,13 +33,16 @@ export class InventoryPage {
     readonly twitterLink: string
     readonly linkedInLink: string
     readonly footerCopy: Locator
+    readonly inventoryItemsDescription: Locator
+    readonly allPriceItems: Locator
+
 
     constructor(page: Page) {
         this.page = page
         this.addToCartButton = page.locator('.pricebar .btn_small')
         this.invetoryItemNames = page.locator('inventory_item_name ')
         this.shoppingCartButton = page.locator('.shopping_cart_link')
-        this.menuButton = page.locator('.bm-burger-button')
+        this.navigationButton = page.locator('.bm-burger-button')
         this.logOutMenu = page.locator('.bm-item-list #logout_sidebar_link')
         this.inventoryURL = 'https://www.saucedemo.com/inventory.html'
         this.labelProducts = page.locator('.title', { hasText: "Products" })
@@ -62,12 +67,22 @@ export class InventoryPage {
         this.twitterLink = 'https://x.com/saucelabs'
         this.linkedInLink = 'https://www.linkedin.com/company/sauce-labs/'
         this.footerCopy = page.locator('.footer_copy')
+        this.inventoryItemsDescription = page.locator('.inventory_item_label .inventory_item_desc')
+        this.allItems = page.locator('#inventory_sidebar_link')
+        this.allPriceItems = this.page.locator('.inventory_item_price')
+
     }
 
+    async AllItems() {
+        await this.navigationButton.hover()
+        await this.navigationButton.click()
+        await this.allItems.hover()
+        await this.allItems.click()
+    }
 
     async LogOut() {
-        await this.menuButton.hover()
-        await this.menuButton.click()
+        await this.navigationButton.hover()
+        await this.navigationButton.click()
         await this.logOutMenu.hover()
         await this.page.waitForTimeout(200)
         await this.logOutMenu.click()
@@ -76,7 +91,7 @@ export class InventoryPage {
     }
 
     async AboutPage() {
-        await this.menuButton.click()
+        await this.navigationButton.click()
         await this.aboutPage.hover()
         await this.page.waitForTimeout(200)
         await this.aboutPage.click()
@@ -85,7 +100,7 @@ export class InventoryPage {
     }
 
     async ResetAppState() {
-        await this.menuButton.click()
+        await this.navigationButton.click()
         await this.resetAppState.hover()
         await this.page.waitForTimeout(200)
         await this.resetAppState.click()
@@ -96,8 +111,18 @@ export class InventoryPage {
     async gotoInventoryPage() {
         await this.page.goto(this.inventoryURL)
         await expect(this.labelProducts).toHaveText('Products')
-        // await this.page.close()
     }
+
+    async validateAllItemsDescription() {
+
+        const expectedDescriptions: string[] = inventoryData.Itemdescriptions
+
+        for (let i = 0; i < 6; i++) {
+            const actualDesctription = await this.inventoryItemsDescription.nth(i).textContent()
+            expect(actualDesctription?.trim()).toBe(expectedDescriptions[i])
+        }
+    }
+
 
     async addToCartSauceLabsBackpack() {
         await this.page.goto(this.inventoryURL)
@@ -186,15 +211,6 @@ export class InventoryPage {
         await this.footerCopy.scrollIntoViewIfNeeded()
         expect(this.footerCopy).toContainText('© 2025 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy')
 
-        // const footerCopies = [
-        //     '© ',
-        //     '2025',
-        //     ' Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy'
-        // ]
-
-        // for (const copy of footerCopies) {
-        //     expect(this.footerCopy).toContainText(footerCopies)
-        // }
     }
 
 
